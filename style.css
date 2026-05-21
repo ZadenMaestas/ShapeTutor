@@ -1,0 +1,361 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jost:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+:root {
+  --void:          #07000F;
+  --abyss:         #0F001C;
+  --dusk:          #1E0035;
+  --neon-pink:     #FF0077;
+  --neon-crimson:  #FF1744;
+  --neon-purple:   #CC00FF;
+  --ember:         #FF5500;
+  --dim:           #C0A0CC;
+  --white:         #FFF0F8;
+
+  /* Legacy aliases — keep these so existing selectors don't break */
+  --dark:       #07000F;
+  --yellow:     #0F001C;
+  --red:        #FF1744;
+  --red-shadow: #880022;
+  --purple:     #CC00FF;
+  --orange:     #FF5500;
+  --green:      #00FF88;
+  --sky-top:    #07000F;
+  --sky-bottom: #1E0035;
+}
+
+/* Reset and utility classes */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.text--red {
+  color: var(--neon-pink);
+  text-shadow: 0 0 8px var(--neon-pink), 0 0 24px rgba(255, 0, 119, 0.7);
+  animation: heartPulse 2s ease-in-out infinite;
+  font-style: normal;
+}
+
+/* Shape clip-paths */
+.shape--circle   { aspect-ratio: 1; border-radius: 50%; object-fit: cover; }
+.shape--square   { aspect-ratio: 1; object-fit: cover; }
+.shape--star     { aspect-ratio: 1; object-fit: cover; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.shape--triangle { aspect-ratio: 1; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); object-fit: cover; }
+.shape--polygon  { aspect-ratio: 1; clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); object-fit: cover; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  background:
+    radial-gradient(ellipse 100% 55% at 50% -8%,  rgba(200,  0,  80, 0.22) 0%, transparent 65%),
+    radial-gradient(ellipse  70% 40% at 88%  96%,  rgba(130,  0, 210, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse  55% 30% at  8%  85%,  rgba(255,  60,  0, 0.10) 0%, transparent 55%),
+    var(--void);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle scanline grain */
+body:has(.start__container)::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 0, 119, 0.012) 3px,
+      rgba(255, 0, 119, 0.012) 4px
+    );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Hot-pink orb — top left */
+body:has(.start__container)::after {
+  content: '';
+  position: fixed;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(255, 0, 119, 0.30) 0%, rgba(255, 0, 119, 0) 70%);
+  border-radius: 50%;
+  top: -4%;
+  left: -3%;
+  animation: floatA 7s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+  will-change: transform;
+}
+
+/* Purple orb — top right */
+.start__container::before {
+  content: '';
+  position: fixed;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(180, 0, 255, 0.25) 0%, rgba(180, 0, 255, 0) 70%);
+  border-radius: 50%;
+  top: -2%;
+  right: -2%;
+  animation: floatB 9s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+  will-change: transform;
+}
+
+/* Ember orb — bottom right */
+.start__container::after {
+  content: '';
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 80, 0, 0.22) 0%, rgba(255, 80, 0, 0) 70%);
+  border-radius: 50%;
+  bottom: -3%;
+  right: -1%;
+  animation: floatA 11s ease-in-out infinite reverse;
+  pointer-events: none;
+  z-index: -1;
+  will-change: transform;
+}
+
+/* Start animations */
+@keyframes floatA {
+  0%, 100% { transform: translateY(0)   scale(1);    }
+  50%       { transform: translateY(-28px) scale(1.08); }
+}
+
+@keyframes floatB {
+  0%, 100% { transform: translateY(0)   scale(1);    }
+  40%       { transform: translateY(-20px) scale(1.06); }
+  70%       { transform: translateY(-8px)  scale(0.96); }
+}
+
+@keyframes heartPulse {
+  0%, 100% { text-shadow: 0 0  8px var(--neon-pink), 0 0 24px rgba(255, 0, 119, 0.7); }
+  50%       { text-shadow: 0 0 18px var(--neon-pink), 0 0 50px rgba(255, 0, 119, 1.0), 0 0 80px rgba(255, 0, 119, 0.4); }
+}
+
+@keyframes titleReveal {
+  0%   { opacity: 0; transform: translateY(20px); filter: blur(8px); }
+  100% { opacity: 1; transform: translateY(0);    filter: blur(0);   }
+}
+
+@keyframes popIn {
+  0%   { opacity: 0; transform: translateY(20px); filter: blur(8px); }
+  100% { opacity: 1; transform: translateY(0);    filter: blur(0);   }
+}
+
+@keyframes btnGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 30px rgba(255, 23, 68, 0.45),
+      0 0 70px rgba(255, 23, 68, 0.15),
+      inset 0 0 18px rgba(255, 23, 68, 0.06);
+  }
+  50% {
+    box-shadow:
+      0 0 55px rgba(255, 23, 68, 0.75),
+      0 0 120px rgba(255, 23, 68, 0.28),
+      inset 0 0 30px rgba(255, 23, 68, 0.12);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: scale(1.00); }
+  50%       { transform: scale(1.03); }
+}
+
+/* H1 title — Bebas Neue, full neon glow */
+h1.start__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.6rem, 10vw, 7.5rem);
+  text-align: center;
+  color: var(--white);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-shadow:
+    0 0  12px var(--neon-pink),
+    0 0  35px rgba(255, 0, 119, 0.55),
+    0 0  80px rgba(255, 0, 119, 0.20);
+  animation: titleReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  padding: 0 1rem;
+}
+
+/* H2, H3 subtitle — Jost light, muted lavender */
+h2.start__title, h3.start__title {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  text-align: center;
+  color: var(--dim);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-shadow: 0 0 14px rgba(255, 0, 119, 0.22);
+  animation: titleReveal 0.9s 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
+  padding: 0 1rem;
+}
+
+/* Generic fallback (keeps alignment for any .start__title without element selector) */
+.start__title {
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.start__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Game page — override body centering so content starts at the top */
+body:has(.container) {
+  justify-content: flex-start;
+  align-items: center;
+  overflow: scroll;
+}
+
+/* Game grid */
+.row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(10px, 3vw, 20px);
+  background: #0D0018;
+  border: 1px solid rgba(255, 0, 119, 0.22);
+  box-shadow:
+    0 0 50px rgba(255, 0, 119, 0.10),
+    inset 0 0 40px rgba(0, 0, 0, 0.5);
+  margin: 0 8px;
+  padding: 16px;
+  border-radius: 4px;
+}
+
+.game__img {
+  aspect-ratio: 1;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+  filter:
+    drop-shadow(0 0 1px rgba(255, 0, 119, 0.95))
+    drop-shadow(0 0 5px rgba(255, 0, 119, 0.45));
+}
+
+.game__img img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.game__img:hover {
+  filter:
+    drop-shadow(0 0 2px rgba(255, 0, 119, 1.0))
+    drop-shadow(0 0 10px rgba(255, 0, 119, 0.75))
+    drop-shadow(0 0 22px rgba(255, 0, 119, 0.30));
+}
+
+.selected {
+  filter:
+    drop-shadow(0 0 2px rgba(255, 0, 119, 1.0))
+    drop-shadow(0 0 10px rgba(255, 0, 119, 0.75))
+    drop-shadow(0 0 22px rgba(255, 0, 119, 0.30));
+}
+
+.correct {
+  filter:
+    drop-shadow(0 0 2px rgba(0, 255, 119, 1.0))
+    drop-shadow(0 0 10px rgba(0, 255, 119, 0.75))
+    drop-shadow(0 0 22px rgba(0, 255, 119, 0.30));
+}
+
+.center { align-self: center; }
+
+.round__title { margin-top: 20px; }
+
+.start__btn {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--white);
+  background: rgba(255, 23, 68, 0.07);
+  border: 1.5px solid var(--neon-crimson);
+  border-radius: 3px;
+  padding: 1rem 4.5rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.22em;
+  box-shadow:
+    0 0 22px rgba(255, 23, 68, 0.35),
+    0 0 60px rgba(255, 23, 68, 0.10),
+    inset 0 0 16px rgba(255, 23, 68, 0.05);
+  text-shadow: 0 0 14px rgba(255, 23, 68, 0.8);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+  animation: titleReveal 0.9s 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+  user-select: none;
+}
+
+.start__btn:hover {
+  background: rgba(255, 23, 68, 0.14);
+  animation: btnGlow 1.4s ease-in-out infinite;
+}
+
+.start__btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 0 12px rgba(255, 23, 68, 0.3);
+}
+
+.index-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.site-footer {
+  width: 100%;
+  text-align: center;
+  padding: 1.2rem 1rem;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  opacity: 0.6;
+}
+
+.footer-link {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.footer-link:hover {
+  opacity: 1;
+  color: var(--neon-pink);
+}
+
+@media (max-width: 480px) {
+  h1.start__title { font-size: clamp(2.8rem, 13vw, 4.2rem); }
+  h3.start__title { letter-spacing: 0.16em; }
+
+  .start__btn {
+    padding: 0.9rem 3rem;
+    font-size: clamp(1.6rem, 6vw, 2rem);
+  }
+
+  body::after,
+  .start__container::before,
+  .start__container::after {
+    animation: none;
+    will-change: auto;
+  }
+}
