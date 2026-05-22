@@ -68,7 +68,9 @@ function startGame() {
 
 function selectShape(shape) {
     document.querySelector('.' + shape).parentElement.classList.add('selected');
-    selectedShapes.push(shape);
+    if (!selectedShapes.includes(shape)){
+        selectedShapes.push(shape);
+    }
     checkThreeInARow();
 }
 
